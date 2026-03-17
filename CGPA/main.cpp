@@ -41,6 +41,21 @@ void showMenu() {
     
 }
 
+int readPositiveInput(string prompt){
+    int value;
+    while(true){
+        cout << prompt;
+        if(!(cin >> value)){
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(),'\n');
+            cout << "Invalid! Please enter a number.\n";
+        } else if (value <= 0) {
+            cout << "Invalid! Must be greater than zero.\n";
+        } else { return value; }
+    }
+}
+
+
 int main() {
     map<string, float> gradeMap = buildGradeMap();
     
@@ -51,7 +66,6 @@ int main() {
     Course c;
     // Ask for Student info
     string name, id;
-    int age;
     
     cout << "Student Name: ";
     getline(cin, name);
@@ -68,16 +82,7 @@ int main() {
         }
     }
     
-    cout << "Student age: ";
-    while(true){
-        if(!(cin >> age)){
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(),'\n');
-            cout <<"Invalid! Please enter a number.\n";
-        } else if(age <= 0){
-            cout << "Invalid! Age must be greater than 0.\n";
-        } else { break; }
-    }
+    int age = readPositiveInput("Student age: ");
     cin.ignore();
     // Constructor
     Student s(name, id, age);
@@ -94,23 +99,11 @@ int main() {
         
         switch (choice) {
             case 1: {
-                cout << "\n ADD SEMESTER\n";
+                cout << "\nADD SEMESTER\n";
                 float totalCredits = 0;
                 float totalQualityPoints = 0;
                 
-                
-                int numCourses;
-                cout << "How many courses? ";
-                while(true) {
-                    if(!(cin >> numCourses)){
-                        cin.clear();
-                        cin.ignore(numeric_limits<streamsize>::max(),'\n');
-                        cout << " Invalid! Please enter a number.\n";
-                    } else if (numCourses <= 0){
-                        cout << " Invalid! Number of courses must be greater than Zero.\n";
-                    }
-                    else { break; }
-                }
+                int numCourses = readPositiveInput("How many courses? ");
                 cin.ignore();
                 
                 vector<Course> courses;
